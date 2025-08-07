@@ -16,9 +16,9 @@ import BookGenres from './pages/BookGenres';
 import Navigation from './components/Navigation';
 
 // Define the backend port and URL for API requests
-const backendPort = 1794;  // Use the port you assigned to the backend server, this would normally go in a .env file
-// const backendURL = `http://classwork.engr.oregonstate.edu:${backendPort}`;
-const backendURL = `http://localhost:${backendPort}`;
+const backendPort = 1795;  // Use the port you assigned to the backend server, this would normally go in a .env file
+const backendURL = `http://classwork.engr.oregonstate.edu:${backendPort}`;
+// const backendURL = `http://localhost:${backendPort}`;
 
 function App() {
     console.log(backendURL)

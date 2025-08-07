@@ -15,7 +15,7 @@ app.use(cors({ credentials: true, origin: "*" }));
 app.use(express.json()); // this is needed for post requests
 
 
-const PORT = 1794;
+const PORT = 1795;
 
 
 // ########################################
@@ -200,7 +200,7 @@ app.post('/library/delete-book', async function (req, res) {
         );
 
         // Redirect the user to the updated webpage data
-        // res.redirect('/Books');
+        res.redirect('/Books');
     } catch (error) {
         console.error('Error executing queries:', error);
         // Send a generic error message to the browser
@@ -323,7 +323,7 @@ app.post('/library/delete-author', async function (req, res) {
         );
 
         // Redirect the user to the updated webpage data
-        // res.redirect('/Books');
+        res.redirect('/Authors');
     } catch (error) {
         console.error('Error executing queries:', error);
         // Send a generic error message to the browser
@@ -440,7 +440,7 @@ app.post('/library/delete-genre', async function (req, res) {
         );
 
         // Redirect the user to the updated webpage data
-        // res.redirect('/Genres');
+        res.redirect('/Genres');
     } catch (error) {
         console.error('Error executing queries:', error);
         // Send a generic error message to the browser
@@ -557,7 +557,7 @@ app.post('/library/delete-publisher', async function (req, res) {
         );
 
         // Redirect the user to the updated webpage data
-        // res.redirect('/Genres');
+        res.redirect('/Publishers');
     } catch (error) {
         console.error('Error executing queries:', error);
         // Send a generic error message to the browser
@@ -710,7 +710,7 @@ app.post('/library/delete-location', async function (req, res) {
         );
 
         // Redirect the user to the updated webpage data
-        // res.redirect('/Genres');
+        res.redirect('/Locations');
     } catch (error) {
         console.error('Error executing queries:', error);
         // Send a generic error message to the browser
@@ -832,7 +832,7 @@ app.post('/library/delete-book-author', async function (req, res) {
         );
 
         // Redirect the user to the updated webpage data
-        // res.redirect('/Genres');
+        res.redirect('/BookAuthors');
     } catch (error) {
         console.error('Error executing queries:', error);
         // Send a generic error message to the browser
@@ -955,7 +955,7 @@ app.post('/library/delete-book-location', async function (req, res) {
         );
 
         // Redirect the user to the updated webpage data
-        // res.redirect('/Genres');
+        res.redirect('/BookLocations');
     } catch (error) {
         console.error('Error executing queries:', error);
         // Send a generic error message to the browser
@@ -1077,7 +1077,7 @@ app.post('/library/delete-book-genre', async function (req, res) {
         );
 
         // Redirect the user to the updated webpage data
-        // res.redirect('/Genres');
+        res.redirect('/BookGenres');
     } catch (error) {
         console.error('Error executing queries:', error);
         // Send a generic error message to the browser
