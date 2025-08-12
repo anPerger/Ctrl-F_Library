@@ -22,6 +22,7 @@ const UpdateBookAuthorForm = ({ rowObject, authors, backendURL, refreshBookAutho
             [name]: value
         }));
     };
+    
 
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent default form submission
@@ -37,7 +38,9 @@ const UpdateBookAuthorForm = ({ rowObject, authors, backendURL, refreshBookAutho
                 console.log("Book/author updated successfully.");
                 refreshBookAuthors();
             } else {
-                console.error("Error updating genre.");
+                let errorData = await response.json();
+                console.error("Error:", errorData.message);
+                window.alert(errorData.message);
             }
         } catch (error) {
             console.error('Error during form submission:', error);
@@ -47,10 +50,9 @@ const UpdateBookAuthorForm = ({ rowObject, authors, backendURL, refreshBookAutho
     return (
         <>
         <td>
-            <div>
             <button onClick={toggleFormVisibility}>
                 {showForm ? 'Hide Form' : 'Update'}
-            </button>
+            </button><br></br>
 
             {showForm && (
                 <form className='cuForm' onSubmit={handleSubmit}>
@@ -67,12 +69,11 @@ const UpdateBookAuthorForm = ({ rowObject, authors, backendURL, refreshBookAutho
                         {author.author_id} - {author.first_name} {author.last_name} 
                     </option>
                 ))}
-            </select>            
+            </select><br></br>        
 
             <input type="submit" />
         </form>
             )}
-            </div>
         </td>
 
         </>

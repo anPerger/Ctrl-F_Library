@@ -29,7 +29,9 @@ const CreatePublisherForm = ({ backendURL, refreshPublishers }) => {
                 console.log("Publisher created successfully.");
                 refreshPublishers();
             } else {
-                console.error("Error creating book.");
+                let errorData = await response.json();
+                console.error("Error:", errorData.message);
+                window.alert(errorData.message);
             }
         } catch (error) {
             console.error('Error during form submission:', error);
@@ -47,7 +49,7 @@ const CreatePublisherForm = ({ backendURL, refreshPublishers }) => {
                 name="create_publisher_name"
                 id="create_publisher_name"
                 onChange={handleChange}
-            />                  
+            /><br></br>              
 
             <input type="submit" />
         </form>

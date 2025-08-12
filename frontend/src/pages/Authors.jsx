@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';  // Importing useState for managing state in the component
 import TableRowAuthor from '../components/TableRowAuthor';
 import CreateAuthorForm from '../components/CreateAuthorForm';
-import UpdateAuthorForm from '../components/UpdateAuthorForm';
+import { Container, Table } from 'react-bootstrap';
+
 
 
 function Authors({ backendURL }) {
@@ -42,7 +43,7 @@ function Authors({ backendURL }) {
         <>
             <h1>Authors</h1>
 
-            <table>
+            <Table striped bordered hover>
                 <thead>
                     <tr>
                         {authors.length > 0 && Object.keys(authors[0]).map((header, index) => (
@@ -58,10 +59,10 @@ function Authors({ backendURL }) {
                     ))}
 
                 </tbody>
-            </table>
+            </Table>
             
             <CreateAuthorForm backendURL={backendURL} refreshAuthors={getData} />
-            <UpdateAuthorForm authors={authors} backendURL={backendURL} refreshAuthors={getData} />               
+                           
                 
         </>
     );

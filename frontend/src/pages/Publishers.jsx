@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';  // Importing useState for managing state in the component
 import TableRowPublisher from '../components/TableRowPublisher';
 import CreatePublisherForm from '../components/CreatePublisherForm';
-import UpdatePublisherForm from '../components/UpdatePublisherForm';
+import { Container, Table } from 'react-bootstrap';
+
 
 
 function Publishers({ backendURL }) {
@@ -42,7 +43,7 @@ function Publishers({ backendURL }) {
         <>
             <h1>Publishers</h1>
 
-            <table>
+            <Table striped bordered hover>
                 <thead>
                     <tr>
                         {publishers.length > 0 && Object.keys(publishers[0]).map((header, index) => (
@@ -58,10 +59,10 @@ function Publishers({ backendURL }) {
                     ))}
 
                 </tbody>
-            </table>
+            </Table>
             
             <CreatePublisherForm backendURL={backendURL} refreshPublishers={getData} />
-            <UpdatePublisherForm publishers={publishers} backendURL={backendURL} refreshPublishers={getData} />               
+                         
                 
         </>
     );

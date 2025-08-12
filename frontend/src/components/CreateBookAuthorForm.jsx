@@ -29,7 +29,9 @@ const CreateBookAuthorForm = ({ books, authors, backendURL, refreshBookAuthors }
                 console.log("Book/Author association created successfully.");
                 refreshBookAuthors();
             } else {
-                console.error("Error creating book.");
+                let errorData = await response.json();
+                console.error("Error:", errorData.message);
+                window.alert(errorData.message);
             }
         } catch (error) {
             console.error('Error during form submission:', error);
@@ -54,7 +56,7 @@ const CreateBookAuthorForm = ({ books, authors, backendURL, refreshBookAuthors }
                             {book.book_id} - {book.title} 
                         </option>
                     ))}
-            </select>
+            </select><br></br>
 
             <label htmlFor="create_book_author_author_id">Author of Book: </label>
                 <select
@@ -69,7 +71,7 @@ const CreateBookAuthorForm = ({ books, authors, backendURL, refreshBookAuthors }
                             {author.author_id} - {author.first_name} {author.last_name} 
                         </option>
                     ))}
-            </select>
+            </select><br></br>
                
             
   

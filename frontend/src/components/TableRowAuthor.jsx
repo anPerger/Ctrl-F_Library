@@ -1,4 +1,5 @@
 import DeleteAuthorForm from './DeleteAuthorForm';
+import UpdateAuthorForm from '../components/UpdateAuthorForm';
 
 const TableRowAuthor = ({ rowObject, backendURL, refreshAuthors }) => {
     return (
@@ -6,7 +7,7 @@ const TableRowAuthor = ({ rowObject, backendURL, refreshAuthors }) => {
             {Object.values(rowObject).map((value, index) => (
                 <td key={index}>{value}</td>
             ))}
-            
+            <UpdateAuthorForm rowObject={rowObject} backendURL={backendURL} refreshAuthors={refreshAuthors}  />
             <DeleteAuthorForm rowObject={rowObject} backendURL={backendURL} refreshAuthors={refreshAuthors} />
         </tr>
     );

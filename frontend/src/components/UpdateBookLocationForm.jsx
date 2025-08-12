@@ -37,7 +37,9 @@ const UpdateBookLocationForm = ({ rowObject, locations, backendURL, refreshBookL
                 console.log("Book/location updated successfully.");
                 refreshBookLocations();
             } else {
-                console.error("Error updating genre.");
+                let errorData = await response.json();
+                console.error("Error:", errorData.message);
+                window.alert(errorData.message);
             }
         } catch (error) {
             console.error('Error during form submission:', error);
@@ -47,10 +49,10 @@ const UpdateBookLocationForm = ({ rowObject, locations, backendURL, refreshBookL
     return (
         <>
         <td>
-            <div>
+
             <button onClick={toggleFormVisibility}>
                 {showForm ? 'Hide Form' : 'Update'}
-            </button>
+            </button><br></br>
 
             {showForm && (
                 <form className='cuForm' onSubmit={handleSubmit}>
@@ -67,12 +69,11 @@ const UpdateBookLocationForm = ({ rowObject, locations, backendURL, refreshBookL
                         {location.location_id} - {location.location_name} 
                     </option>
                 ))}
-            </select>            
+            </select><br></br>         
 
             <input type="submit" />
         </form>
             )}
-            </div>
         </td>
 
         </>

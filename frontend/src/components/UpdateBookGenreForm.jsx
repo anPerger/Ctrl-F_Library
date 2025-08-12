@@ -38,7 +38,9 @@ const UpdateBookGenreForm = ({ rowObject, genres, backendURL, refreshBookGenres 
                 console.log("Book/genre updated successfully.");
                 refreshBookGenres();
             } else {
-                console.error("Error updating genre.");
+                let errorData = await response.json();
+                console.error("Error:", errorData.message);
+                window.alert(errorData.message);
             }
         } catch (error) {
             console.error('Error during form submission:', error);
@@ -48,10 +50,9 @@ const UpdateBookGenreForm = ({ rowObject, genres, backendURL, refreshBookGenres 
     return (
         <>
         <td>
-            <div>
             <button onClick={toggleFormVisibility}>
                 {showForm ? 'Hide Form' : 'Update'}
-            </button>
+            </button><br></br>
 
             {showForm && (
                 <form className='cuForm' onSubmit={handleSubmit}>
@@ -68,12 +69,11 @@ const UpdateBookGenreForm = ({ rowObject, genres, backendURL, refreshBookGenres 
                         {genre.genre_id} - {genre.genre_name} 
                     </option>
                 ))}
-            </select>            
+            </select><br></br>       
 
             <input type="submit" />
         </form>
             )}
-            </div>
         </td>
 
         </>

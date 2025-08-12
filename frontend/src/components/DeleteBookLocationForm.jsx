@@ -5,7 +5,10 @@ const DeleteBookLocationForm = ({ rowObject, backendURL, refreshBookLocations })
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent default form submission
 
-        const formData = {
+        if (window.confirm("Are you sure you want to submit this form?")) {
+      // User clicked "OK", proceed with form submission logic
+      console.log("Form submitted!");
+      const formData = {
             delete_book_location_book_id: rowObject.book_id,
             delete_book_location_location_id: rowObject.location_id
         };
@@ -21,11 +24,18 @@ const DeleteBookLocationForm = ({ rowObject, backendURL, refreshBookLocations })
                 console.log("Book/Location association deleted successfully.");
                 refreshBookLocations();
             } else {
-                console.error("Error deleting association.");
+                let errorData = await response.json();
+                console.error("Error:", errorData.message);
+                window.alert(errorData.message);
             }
         } catch (error) {
             console.error('Error during form submission:', error);
         }
+    } else {
+      // User clicked "Cancel", do nothing
+      console.log("Form submission cancelled.");
+    }
+        
     };
 
     return (

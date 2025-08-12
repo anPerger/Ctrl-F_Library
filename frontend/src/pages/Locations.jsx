@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';  // Importing useState for managing state in the component
 import TableRowLocation from '../components/TableRowLocation';
 import CreateLocationForm from '../components/CreateLocationForm';
-import UpdateLocationForm from '../components/UpdateLocationForm';
+import { Container, Table } from 'react-bootstrap';
 
 
 function Locations({ backendURL }) {
@@ -40,7 +40,8 @@ function Locations({ backendURL }) {
         <>
             <h1>Locations</h1>
 
-            <table>
+            <Container style={{ maxWidth: "mw-100" }}>
+            <Table striped bordered hover>
                 <thead>
                     <tr>
                         {locations.length > 0 && Object.keys(locations[0]).map((header, index) => (
@@ -56,10 +57,11 @@ function Locations({ backendURL }) {
                     ))}
 
                 </tbody>
-            </table>
+            </Table>
+            </Container>
             
             <CreateLocationForm backendURL={backendURL} refreshLocations={getData} />
-            <UpdateLocationForm locations={locations} backendURL={backendURL} refreshLocations={getData} />               
+                           
                 
         </>
     );

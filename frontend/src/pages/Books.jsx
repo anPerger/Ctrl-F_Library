@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react';  // Importing useState for managing state in the component
 import TableRowBook from '../components/TableRowBook';
 import CreateBookForm from '../components/CreateBookForm';
-import UpdateBookForm from '../components/UpdateBookForm';
+import { Container, Table } from 'react-bootstrap';
+
+
 
 
 function Books({ backendURL }) {
 
     // Set up a state variable `people` to store and display the backend response
     const [books, setBooks] = useState([]);
-    const [publishes, setPublishers] = useState([]);
-
-    console.log(backendURL)
+    const [publishers, setPublishers] = useState([]);
     
     const getData = async function () {
         try {
@@ -41,8 +41,8 @@ function Books({ backendURL }) {
     return (
         <>
             <h1>Books</h1>
-
-            <table>
+            <Container style={{ maxWidth: "mw-100" }}>
+            <Table striped bordered hover>
                 <thead>
                     <tr>
                         {books.length > 0 && Object.keys(books[0]).map((header, index) => (
@@ -54,14 +54,15 @@ function Books({ backendURL }) {
 
                 <tbody>
                     {books.map((book, index) => (
-                        <TableRowBook key={index} rowObject={book} backendURL={backendURL} refreshBooks={getData}/>
+                        <TableRowBook key={index} rowObject={book} publishers={publishers} backendURL={backendURL} refreshBooks={getData}/>
                     ))}
 
                 </tbody>
-            </table>
+            </Table>
+            </Container>
             
-            <CreateBookForm publishers={publishes} backendURL={backendURL} refreshBooks={getData} />
-            <UpdateBookForm books={books} publishers={publishes} backendURL={backendURL} refreshBooks={getData} />               
+            <CreateBookForm publishers={publishers} backendURL={backendURL} refreshBooks={getData} />
+                           
                 
         </>
     );

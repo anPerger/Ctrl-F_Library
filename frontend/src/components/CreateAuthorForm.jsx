@@ -30,7 +30,9 @@ const CreateAuthorForm = ({ backendURL, refreshAuthors }) => {
                 console.log("Author created successfully.");
                 refreshAuthors();
             } else {
-                console.error("Error creating book.");
+                let errorData = await response.json();
+                console.error("Error:", errorData.message);
+                window.alert(errorData.message);
             }
         } catch (error) {
             console.error('Error during form submission:', error);
@@ -49,7 +51,7 @@ const CreateAuthorForm = ({ backendURL, refreshAuthors }) => {
                 name="create_author_fname"
                 id="create_author_fname"
                 onChange={handleChange}
-            />
+            /><br></br>
 
             <label htmlFor="create_author_lname">Last Name: </label>
             <input
@@ -57,7 +59,7 @@ const CreateAuthorForm = ({ backendURL, refreshAuthors }) => {
                 name="create_author_lname"
                 id="create_author_lname"
                 onChange={handleChange}
-            />
+            /><br></br>
               
             <input type="submit" />
         </form>

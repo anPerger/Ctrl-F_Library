@@ -30,7 +30,9 @@ const CreateGenreForm = ({ backendURL, refreshGenres }) => {
                 console.log("Genre created successfully.");
                 refreshGenres();
             } else {
-                console.error("Error creating book.");
+                let errorData = await response.json();
+                console.error("Error:", errorData.message);
+                window.alert(errorData.message);
             }
         } catch (error) {
             console.error('Error during form submission:', error);
@@ -48,7 +50,7 @@ const CreateGenreForm = ({ backendURL, refreshGenres }) => {
                 name="create_genre_name"
                 id="create_genre_name"
                 onChange={handleChange}
-            />                  
+            /><br></br>            
 
             <input type="submit" />
         </form>

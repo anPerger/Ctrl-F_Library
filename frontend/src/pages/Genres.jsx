@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';  // Importing useState for managing state in the component
 import TableRowGenre from '../components/TableRowGenre';
 import CreateGenreForm from '../components/CreateGenreForm';
-import UpdateGenreForm from '../components/UpdateGenreForm';
+import { Container, Table } from 'react-bootstrap';
+
 
 
 function Genres({ backendURL }) {
@@ -39,7 +40,7 @@ function Genres({ backendURL }) {
         <>
             <h1>Genres</h1>
 
-            <table>
+            <Table striped bordered hover>
                 <thead>
                     <tr>
                         {genres.length > 0 && Object.keys(genres[0]).map((header, index) => (
@@ -55,10 +56,10 @@ function Genres({ backendURL }) {
                     ))}
 
                 </tbody>
-            </table>
+            </Table>
             
             <CreateGenreForm backendURL={backendURL} refreshGenres={getData} />
-            <UpdateGenreForm genres={genres} backendURL={backendURL} refreshGenres={getData} />               
+                          
                 
         </>
     );

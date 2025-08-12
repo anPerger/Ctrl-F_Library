@@ -4,6 +4,7 @@ const CreateBookGenreForm = ({ books, genres, backendURL, refreshBookGenres }) =
     const [formData, setFormData] = useState({
         create_book_genre_book_id: '',
         create_book_genre_genre_id: ''
+
     });
 
     const handleChange = (e) => {
@@ -14,7 +15,6 @@ const CreateBookGenreForm = ({ books, genres, backendURL, refreshBookGenres }) =
         }));
     };
 
-
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent default form submission
         
@@ -23,13 +23,16 @@ const CreateBookGenreForm = ({ books, genres, backendURL, refreshBookGenres }) =
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData),
-            });
-
+            })
+            
+                
             if (response.ok) {
                 console.log("Book/genre association created successfully.");
                 refreshBookGenres();
             } else {
-                console.error("Error creating book.");
+                let errorData = await response.json();
+                console.error("Error:", errorData.message);
+                window.alert(errorData.message);
             }
         } catch (error) {
             console.error('Error during form submission:', error);
@@ -54,7 +57,7 @@ const CreateBookGenreForm = ({ books, genres, backendURL, refreshBookGenres }) =
                             {book.book_id} - {book.title} 
                         </option>
                     ))}
-            </select>
+            </select><br></br>
 
             <label htmlFor="create_book_genre_genre_id">Book has genre: </label>
                 <select
@@ -69,11 +72,8 @@ const CreateBookGenreForm = ({ books, genres, backendURL, refreshBookGenres }) =
                             {genre.genre_id} - {genre.genre_name}
                         </option>
                     ))}
-            </select>
+            </select><br></br>
                
-            
-  
-
          
             <input type="submit" />
         </form>

@@ -1,9 +1,14 @@
 import { useState, useEffect } from 'react';  // Importing useState for managing state in the component
 
-const UpdateLocationForm = ({ locations, backendURL, refreshLocations }) => {
+const UpdateLocationForm = ({ rowObject, backendURL, refreshLocations }) => {
+    const [showForm, setShowForm] = useState(false);
+
+    const toggleFormVisibility = () => {
+        setShowForm(!showForm);
+    };
 
     const [formData, setFormData] = useState({
-            update_location_id: '',
+            update_location_id: rowObject.location_id,
             update_location_name: '',
             update_location_address: '',
             update_location_city: '',
@@ -34,7 +39,9 @@ const UpdateLocationForm = ({ locations, backendURL, refreshLocations }) => {
                     console.log("Location updated successfully.");
                     refreshLocations();
                 } else {
-                    console.error("Error updating book.");
+                    let errorData = await response.json();
+                    console.error("Error:", errorData.message);
+                    window.alert(errorData.message);
                 }
             } catch (error) {
                 console.error('Error during form submission:', error);
@@ -44,30 +51,21 @@ const UpdateLocationForm = ({ locations, backendURL, refreshLocations }) => {
 
     return (
         <>
-        <h2>Update a location</h2>
+        <td>
+            <button onClick={toggleFormVisibility}>
+                {showForm ? 'Hide Form' : 'Update'}
+            </button><br></br>
+
+        {showForm && (
 
         <form className='cuForm' onSubmit={handleSubmit}>
-            <label htmlFor="update_location_id">Location to Update: </label>
-            <select
-                name="update_location_id"
-                id="update_location_id"
-                onChange={handleChange}
-            >
-                <option value="">Select a location</option>
-                {locations.map((location) => (
-                    <option key={location.location_id} value={location.location_id}>
-                        {location.location_id} - {location.location_name} 
-                    </option>
-                ))}
-            </select>
-
-            <label htmlFor="update_location_name">Location Name: </label>
+            <label htmlFor="update_location_name">Name: </label>
             <input
                 type="text"
                 name="update_location_name"
                 id="update_location_name"
                 onChange={handleChange}
-            />
+            /><br></br>
 
             <label htmlFor="update_location_address">Address: </label>
             <input
@@ -75,7 +73,7 @@ const UpdateLocationForm = ({ locations, backendURL, refreshLocations }) => {
                 name="update_location_address"
                 id="update_location_address"
                 onChange={handleChange}
-            />
+            /><br></br>
 
             <label htmlFor="update_location_city">City: </label>
             <input
@@ -83,7 +81,7 @@ const UpdateLocationForm = ({ locations, backendURL, refreshLocations }) => {
                 name="update_location_city"
                 id="update_location_city"
                 onChange={handleChange}
-            />
+            /><br></br>
 
             <label htmlFor="update_location_state">State: </label>
             <input
@@ -91,18 +89,20 @@ const UpdateLocationForm = ({ locations, backendURL, refreshLocations }) => {
                 name="update_location_state"
                 id="update_location_state"
                 onChange={handleChange}
-            />
+            /><br></br>
 
-            <label htmlFor="update_location_phone_number">Phone Number: </label>
+            <label htmlFor="update_location_phone_number">Phone #: </label>
             <input
                 type="text"
                 name="update_location_phone_number"
                 id="update_location_phone_number"
                 onChange={handleChange}
-            />     
+            /><br></br>   
 
             <input type="submit" />
         </form>
+        )}
+            </td>
         </>
     );
 };

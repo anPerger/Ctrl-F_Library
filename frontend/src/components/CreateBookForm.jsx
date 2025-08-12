@@ -32,7 +32,9 @@ const CreateBookForm = ({ publishers, backendURL, refreshBooks }) => {
                 console.log("Book created successfully.");
                 refreshBooks();
             } else {
-                console.error("Error creating book.");
+                let errorData = await response.json();
+                console.error("Error:", errorData.message);
+                window.alert(errorData.message);
             }
         } catch (error) {
             console.error('Error during form submission:', error);
@@ -51,7 +53,7 @@ const CreateBookForm = ({ publishers, backendURL, refreshBooks }) => {
                 id="create_book_title"
                 required="True"
                 onChange={handleChange}
-            />
+            /><br></br>
                
             <label htmlFor="create_book_publisher">Publisher: </label>
             <select
@@ -65,34 +67,32 @@ const CreateBookForm = ({ publishers, backendURL, refreshBooks }) => {
                     <option value={publisher.publisher_id} key={index}>{publisher.publisher_name}</option>
                 ))}
                 
-            </select>
+            </select><br></br>
   
             <label htmlFor="create_book_language">Language: </label>
             <input
                 type="text"
                 name="create_book_language"
                 id="create_book_language"
-                placeholder="English"
                 onChange={handleChange}
-            />
+            /><br></br>
 
             <label htmlFor="create_book_isbn">ISBN: </label>
             <input
                 type="text"
                 name="create_book_isbn"
                 id="create_book_isbn"
-                required="True"
                 onChange={handleChange}
-            />
+            /><br></br>
 
               
-            <label htmlFor="create_book_pub_date">Publication date:</label>
+            <label htmlFor="create_book_pub_date">Publication date: </label>
             <input
                 type="date"
                 id="create_book_pub_date"
                 name="create_book_pub_date"
                 onChange={handleChange}
-            />
+            /><br></br>
 
             <input type="submit" />
         </form>

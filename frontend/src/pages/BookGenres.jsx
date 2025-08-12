@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';  // Importing useState for managing state in the component
 import TableRowBookGenre from '../components/TableRowBookGenre';
 import CreateBookGenreForm from '../components/CreateBookGenreForm';
+import { Container, Table } from 'react-bootstrap';
 
 
 
@@ -43,7 +44,7 @@ function BookGenres({ backendURL }) {
         <>
             <h1>Book Genres</h1>
 
-            <table>
+            <Table striped bordered hover>
                 <thead>
                     <tr>
                         {bookGenres.length > 0 && Object.keys(bookGenres[0]).map((header, index) => (
@@ -59,7 +60,7 @@ function BookGenres({ backendURL }) {
                     ))}
 
                 </tbody>
-            </table>
+            </Table>
             
             <CreateBookGenreForm books={books} genres={genres} backendURL={backendURL} refreshBookGenres={getData} />
 

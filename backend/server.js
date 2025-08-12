@@ -36,9 +36,10 @@ app.get('/library/reset', async (req, res) => {
 
 
     } catch (error) {
-        console.error("Error executing queries:", error);
+        console.error('Error executing queries:', error.sqlMessage);
         // Send a generic error message to the browser
-        res.status(500).send("An error occurred while executing the database queries.");
+        res.status(500).json({message: error.sqlMessage}
+        );
     }
 
 })
@@ -66,9 +67,10 @@ app.get('/library/books', async (req, res) => {
         res.status(200).json({ books, publishers });  // Send the results to the frontend
 
     } catch (error) {
-        console.error("Error executing queries:", error);
+        console.error('Error executing queries:', error.sqlMessage);
         // Send a generic error message to the browser
-        res.status(500).send("An error occurred while executing the database queries.");
+        res.status(500).json({message: error.sqlMessage}
+        );
     }
     
 });
@@ -118,10 +120,9 @@ app.post('/library/create-book', async function (req, res) {
         // Send success status to frontend
         res.status(200).json({ message: 'Book created successfully' });
     } catch (error) {
-        console.error('Error executing queries:', error);
+        console.error('Error executing queries:', error.sqlMessage);
         // Send a generic error message to the browser
-        res.status(500).send(
-            'An error occurred while executing the database queries.'
+        res.status(500).json({message: error.sqlMessage}
         );
     }
 });
@@ -145,16 +146,14 @@ app.post('/library/update-book', async function (req, res) {
             data.update_book_publisher = default_publisher
         };
         if (data.update_book_language == '') {
-            data.update_book_langauge = default_language
+            data.update_book_language = default_language
         };
         if (data.update_book_isbn == '') {
             data.update_book_isbn = default_isbn
         };
         if (data.update_book_pub_date == '') {
             data.update_book_pub_date = default_publication_date.toLocaleDateString('en-CA')
-        } else {
-            data.update_book_pub_date = default_publication_date.toLocaleDateString('en-CA')
-        };      
+        };  
          
         // Create and execute our queries
         // Using parameterized queries (Prevents SQL injection attacks)
@@ -175,10 +174,9 @@ app.post('/library/update-book', async function (req, res) {
         // Send success status to frontend
         res.status(200).json({ message: 'Book updated successfully' });
     } catch (error) {
-        console.error('Error executing queries:', error);
+        console.error('Error executing queries:', error.sqlMessage);
         // Send a generic error message to the browser
-        res.status(500).send(
-            'An error occurred while executing the database queries.'
+        res.status(500).json({message: error.sqlMessage}
         );
     }
 });
@@ -189,23 +187,21 @@ app.post('/library/delete-book', async function (req, res) {
     try {
         // Parse frontend form information
         let data = req.body;
-
+        console.log(data)
         // Create and execute our query
         // Using parameterized queries (Prevents SQL injection attacks)
         const query1 = `CALL sp_delete_book(?);`;
         await db.query(query1, [data.delete_book_id]);
 
-        console.log(`DELETE book. ID: ${data.delete_book_id} ` +
-            `Title: ${data.delete_title}`
+        console.log(`DELETE book. ID: ${data.delete_book_id} `
         );
 
         // Redirect the user to the updated webpage data
-        res.redirect('/Books');
+        res.redirect('/library/books');
     } catch (error) {
-        console.error('Error executing queries:', error);
+        console.error('Error executing queries:', error.sqlMessage);
         // Send a generic error message to the browser
-        res.status(500).send(
-            'An error occurred while executing the database queries.'
+        res.status(500).json({message: error.sqlMessage}
         );
     }
 });
@@ -222,9 +218,10 @@ app.get('/library/authors', async (req, res) => {
         res.status(200).json({ authors });  // Send the results to the frontend
 
     } catch (error) {
-        console.error("Error executing queries:", error);
+        console.error('Error executing queries:', error.sqlMessage);
         // Send a generic error message to the browser
-        res.status(500).send("An error occurred while executing the database queries.");
+        res.status(500).json({message: error.sqlMessage}
+        );
     }
     
 });
@@ -251,10 +248,9 @@ app.post('/library/create-author', async function (req, res) {
         // Send success status to frontend
         res.status(200).json({ message: 'Author created successfully' });
     } catch (error) {
-        console.error('Error executing queries:', error);
+        console.error('Error executing queries:', error.sqlMessage);
         // Send a generic error message to the browser
-        res.status(500).send(
-            'An error occurred while executing the database queries.'
+        res.status(500).json({message: error.sqlMessage}
         );
     }
 });
@@ -298,10 +294,9 @@ app.post('/library/update-author', async function (req, res) {
         // Send success status to frontend
         res.status(200).json({ message: 'Author updated successfully' });
     } catch (error) {
-        console.error('Error executing queries:', error);
+        console.error('Error executing queries:', error.sqlMessage);
         // Send a generic error message to the browser
-        res.status(500).send(
-            'An error occurred while executing the database queries.'
+        res.status(500).json({message: error.sqlMessage}
         );
     }
 });
@@ -323,12 +318,11 @@ app.post('/library/delete-author', async function (req, res) {
         );
 
         // Redirect the user to the updated webpage data
-        res.redirect('/Authors');
+        res.redirect('/library/authors');
     } catch (error) {
-        console.error('Error executing queries:', error);
+        console.error('Error executing queries:', error.sqlMessage);
         // Send a generic error message to the browser
-        res.status(500).send(
-            'An error occurred while executing the database queries.'
+        res.status(500).json({message: error.sqlMessage}
         );
     }
 });
@@ -345,9 +339,10 @@ app.get('/library/genres', async (req, res) => {
         res.status(200).json({ genres });  // Send the results to the frontend
 
     } catch (error) {
-        console.error("Error executing queries:", error);
+        console.error('Error executing queries:', error.sqlMessage);
         // Send a generic error message to the browser
-        res.status(500).send("An error occurred while executing the database queries.");
+        res.status(500).json({message: error.sqlMessage}
+        );
     }
     
 });
@@ -373,10 +368,9 @@ app.post('/library/create-genre', async function (req, res) {
         // Send success status to frontend
         res.status(200).json({ message: 'Genre created successfully' });
     } catch (error) {
-        console.error('Error executing queries:', error);
+        console.error('Error executing queries:', error.sqlMessage);
         // Send a generic error message to the browser
-        res.status(500).send(
-            'An error occurred while executing the database queries.'
+        res.status(500).json({message: error.sqlMessage}
         );
     }
 });
@@ -415,10 +409,9 @@ app.post('/library/update-genre', async function (req, res) {
         // Send success status to frontend
         res.status(200).json({ message: 'genre updated successfully' });
     } catch (error) {
-        console.error('Error executing queries:', error);
+        console.error('Error executing queries:', error.sqlMessage);
         // Send a generic error message to the browser
-        res.status(500).send(
-            'An error occurred while executing the database queries.'
+        res.status(500).json({message: error.sqlMessage}
         );
     }
 });
@@ -440,12 +433,11 @@ app.post('/library/delete-genre', async function (req, res) {
         );
 
         // Redirect the user to the updated webpage data
-        res.redirect('/Genres');
+        res.redirect('/library/genres');
     } catch (error) {
-        console.error('Error executing queries:', error);
+        console.error('Error executing queries:', error.sqlMessage);
         // Send a generic error message to the browser
-        res.status(500).send(
-            'An error occurred while executing the database queries.'
+        res.status(500).json({message: error.sqlMessage}
         );
     }
 });
@@ -461,9 +453,10 @@ app.get('/library/publishers', async (req, res) => {
         res.status(200).json({ publishers });  // Send the results to the frontend
 
     } catch (error) {
-        console.error("Error executing queries:", error);
+        console.error('Error executing queries:', error.sqlMessage);
         // Send a generic error message to the browser
-        res.status(500).send("An error occurred while executing the database queries.");
+        res.status(500).json({message: error.sqlMessage}
+        );
     }
     
 });
@@ -489,10 +482,9 @@ app.post('/library/create-publisher', async function (req, res) {
         // Send success status to frontend
         res.status(200).json({ message: 'Genre created successfully' });
     } catch (error) {
-        console.error('Error executing queries:', error);
+        console.error('Error executing queries:', error.sqlMessage);
         // Send a generic error message to the browser
-        res.status(500).send(
-            'An error occurred while executing the database queries.'
+        res.status(500).json({message: error.sqlMessage}
         );
     }
 });
@@ -502,7 +494,6 @@ app.post('/library/update-publisher', async function (req, res) {
         // Parse frontend form information
         let data = req.body;
 
-        console.log(data)
         const default_query = `SELECT * FROM publishers WHERE publisher_id = ${data.update_publisher_id}`;
         
 
@@ -532,10 +523,9 @@ app.post('/library/update-publisher', async function (req, res) {
         // Send success status to frontend
         res.status(200).json({ message: 'Publisher updated successfully' });
     } catch (error) {
-        console.error('Error executing queries:', error);
+        console.error('Error executing queries:', error.sqlMessage);
         // Send a generic error message to the browser
-        res.status(500).send(
-            'An error occurred while executing the database queries.'
+        res.status(500).json({message: error.sqlMessage}
         );
     }
 });
@@ -557,12 +547,11 @@ app.post('/library/delete-publisher', async function (req, res) {
         );
 
         // Redirect the user to the updated webpage data
-        res.redirect('/Publishers');
+        res.redirect('/library/publishers');
     } catch (error) {
-        console.error('Error executing queries:', error);
+        console.error('Error executing queries:', error.sqlMessage);
         // Send a generic error message to the browser
-        res.status(500).send(
-            'An error occurred while executing the database queries.'
+        res.status(500).json({message: error.sqlMessage}
         );
     }
 });
@@ -579,9 +568,10 @@ app.get('/library/locations', async (req, res) => {
         res.status(200).json({ locations });  // Send the results to the frontend
 
     } catch (error) {
-        console.error("Error executing queries:", error);
+        console.error('Error executing queries:', error.sqlMessage);
         // Send a generic error message to the browser
-        res.status(500).send("An error occurred while executing the database queries.");
+        res.status(500).json({message: error.sqlMessage}
+        );
     }
     
 });
@@ -613,10 +603,9 @@ app.post('/library/create-location', async function (req, res) {
         // Send success status to frontend
         res.status(200).json({ message: 'Location created successfully' });
     } catch (error) {
-        console.error('Error executing queries:', error);
+        console.error('Error executing queries:', error.sqlMessage);
         // Send a generic error message to the browser
-        res.status(500).send(
-            'An error occurred while executing the database queries.'
+        res.status(500).json({message: error.sqlMessage}
         );
     }
 });
@@ -683,10 +672,9 @@ app.post('/library/update-location', async function (req, res) {
         // Send success status to frontend
         res.status(200).json({ message: 'Location updated successfully' });
     } catch (error) {
-        console.error('Error executing queries:', error);
+        console.error('Error executing queries:', error.sqlMessage);
         // Send a generic error message to the browser
-        res.status(500).send(
-            'An error occurred while executing the database queries.'
+        res.status(500).json({message: error.sqlMessage}
         );
     }
 });
@@ -710,12 +698,11 @@ app.post('/library/delete-location', async function (req, res) {
         );
 
         // Redirect the user to the updated webpage data
-        res.redirect('/Locations');
+        res.redirect('/library/locations');
     } catch (error) {
-        console.error('Error executing queries:', error);
+        console.error('Error executing queries:', error.sqlMessage);
         // Send a generic error message to the browser
-        res.status(500).send(
-            'An error occurred while executing the database queries.'
+        res.status(500).json({message: error.sqlMessage}
         );
     }
 });
@@ -741,9 +728,10 @@ app.get('/library/book-authors', async (req, res) => {
         res.status(200).json({ bookAuthors, books, authors });  // Send the results to the frontend
 
     } catch (error) {
-        console.error("Error executing queries:", error);
+        console.error('Error executing queries:', error.sqlMessage);
         // Send a generic error message to the browser
-        res.status(500).send("An error occurred while executing the database queries.");
+        res.status(500).json({message: error.sqlMessage}
+        );
     }
     
 });
@@ -770,10 +758,9 @@ app.post('/library/create-book-author', async function (req, res) {
         // Send success status to frontend
         res.status(200).json({ message: 'Location created successfully' });
     } catch (error) {
-        console.error('Error executing queries:', error);
+        console.error('Error executing queries:', error.sqlMessage);
         // Send a generic error message to the browser
-        res.status(500).send(
-            'An error occurred while executing the database queries.'
+        res.status(500).json({message: error.sqlMessage}
         );
     }
 });
@@ -804,10 +791,9 @@ app.post('/library/update-book-author', async function (req, res) {
         // Send success status to frontend
         res.status(200).json({ message: 'Publisher updated successfully' });
     } catch (error) {
-        console.error('Error executing queries:', error);
+        console.error('Error executing queries:', error.sqlMessage);
         // Send a generic error message to the browser
-        res.status(500).send(
-            'An error occurred while executing the database queries.'
+        res.status(500).json({message: error.sqlMessage}
         );
     }
 });
@@ -832,12 +818,12 @@ app.post('/library/delete-book-author', async function (req, res) {
         );
 
         // Redirect the user to the updated webpage data
-        res.redirect('/BookAuthors');
+        res.redirect("/library/book-authors")
+        
     } catch (error) {
-        console.error('Error executing queries:', error);
+        console.error('Error executing queries:', error.sqlMessage);
         // Send a generic error message to the browser
-        res.status(500).send(
-            'An error occurred while executing the database queries.'
+        res.status(500).json({message: error.sqlMessage}
         );
     }
 });
@@ -864,9 +850,10 @@ app.get('/library/book-locations', async (req, res) => {
         res.status(200).json({ bookLocations, books, locations });  // Send the results to the frontend
 
     } catch (error) {
-        console.error("Error executing queries:", error);
+        console.error('Error executing queries:', error.sqlMessage);
         // Send a generic error message to the browser
-        res.status(500).send("An error occurred while executing the database queries.");
+        res.status(500).json({message: error.sqlMessage}
+        );
     }
     
 });
@@ -893,10 +880,9 @@ app.post('/library/create-book-location', async function (req, res) {
         // Send success status to frontend
         res.status(200).json({ message: 'Location created successfully' });
     } catch (error) {
-        console.error('Error executing queries:', error);
+        console.error('Error executing queries:', error.sqlMessage);
         // Send a generic error message to the browser
-        res.status(500).send(
-            'An error occurred while executing the database queries.'
+        res.status(500).json({message: error.sqlMessage}
         );
     }
 });
@@ -927,10 +913,9 @@ app.post('/library/update-book-location', async function (req, res) {
         // Send success status to frontend
         res.status(200).json({ message: 'Book/Location updated successfully' });
     } catch (error) {
-        console.error('Error executing queries:', error);
+        console.error('Error executing queries:', error.sqlMessage);
         // Send a generic error message to the browser
-        res.status(500).send(
-            'An error occurred while executing the database queries.'
+        res.status(500).json({message: error.sqlMessage}
         );
     }
 });
@@ -955,12 +940,11 @@ app.post('/library/delete-book-location', async function (req, res) {
         );
 
         // Redirect the user to the updated webpage data
-        res.redirect('/BookLocations');
+        res.redirect('/library/book-locations');
     } catch (error) {
-        console.error('Error executing queries:', error);
+        console.error('Error executing queries:', error.sqlMessage);
         // Send a generic error message to the browser
-        res.status(500).send(
-            'An error occurred while executing the database queries.'
+        res.status(500).json({message: error.sqlMessage}
         );
     }
 });
@@ -986,11 +970,11 @@ app.get('/library/book-genres', async (req, res) => {
         res.status(200).json({ bookGenres, books, genres });  // Send the results to the frontend
 
     } catch (error) {
-        console.error("Error executing queries:", error);
+        console.error('Error executing queries:', error.sqlMessage);
         // Send a generic error message to the browser
-        res.status(500).send("An error occurred while executing the database queries.");
+        res.status(500).json({message: error.sqlMessage}
+        );
     }
-    
 });
 
 app.post('/library/create-book-genre', async function (req, res) {
@@ -1015,10 +999,9 @@ app.post('/library/create-book-genre', async function (req, res) {
         // Send success status to frontend
         res.status(200).json({ message: 'Book/Genre created successfully' });
     } catch (error) {
-        console.error('Error executing queries:', error);
+        console.error('Error executing queries:', error.sqlMessage);
         // Send a generic error message to the browser
-        res.status(500).send(
-            'An error occurred while executing the database queries.'
+        res.status(500).json({message: error.sqlMessage}
         );
     }
 });
@@ -1049,10 +1032,9 @@ app.post('/library/update-book-genre', async function (req, res) {
         // Send success status to frontend
         res.status(200).json({ message: 'Publisher updated successfully' });
     } catch (error) {
-        console.error('Error executing queries:', error);
+        console.error('Error executing queries:', error.sqlMessage);
         // Send a generic error message to the browser
-        res.status(500).send(
-            'An error occurred while executing the database queries.'
+        res.status(500).json({message: error.sqlMessage}
         );
     }
 });
@@ -1061,8 +1043,6 @@ app.post('/library/delete-book-genre', async function (req, res) {
     try {
         // Parse frontend form information
         let data = req.body;
-
-        // console.log(data)
 
         // Create and execute our query
         // Using parameterized queries (Prevents SQL injection attacks)
@@ -1077,12 +1057,11 @@ app.post('/library/delete-book-genre', async function (req, res) {
         );
 
         // Redirect the user to the updated webpage data
-        res.redirect('/BookGenres');
+        res.redirect('/library/book-genres');
     } catch (error) {
-        console.error('Error executing queries:', error);
+        console.error('Error executing queries:', error.sqlMessage);
         // Send a generic error message to the browser
-        res.status(500).send(
-            'An error occurred while executing the database queries.'
+        res.status(500).json({message: error.sqlMessage}
         );
     }
 });

@@ -29,7 +29,9 @@ const CreateBookLocationForm = ({ books, locations, backendURL, refreshBookLocat
                 console.log("Book/location association created successfully.");
                 refreshBookLocations();
             } else {
-                console.error("Error creating book.");
+                let errorData = await response.json();
+                console.error("Error:", errorData.message);
+                window.alert(errorData.message);
             }
         } catch (error) {
             console.error('Error during form submission:', error);
@@ -54,7 +56,7 @@ const CreateBookLocationForm = ({ books, locations, backendURL, refreshBookLocat
                             {book.book_id} - {book.title} 
                         </option>
                     ))}
-            </select>
+            </select><br></br>
 
             <label htmlFor="create_book_location_location_id">Book in location: </label>
                 <select
@@ -69,11 +71,9 @@ const CreateBookLocationForm = ({ books, locations, backendURL, refreshBookLocat
                             {location.location_id} - {location.location_name}
                         </option>
                     ))}
-            </select>
+            </select><br></br>
                
-            
-  
-
+    
          
             <input type="submit" />
         </form>

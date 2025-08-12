@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';  // Importing useState for managing state in the component
 import TableRowBookLocation from '../components/TableRowBookLocation';
 import CreateBookLocationForm from '../components/CreateBookLocationForm';
-// import UpdateBookAuthorForm from '../components/UpdateBookAuthorForm';
+import { Container, Table } from 'react-bootstrap';
 
 
 function BookLocations({ backendURL }) {
@@ -43,7 +43,7 @@ function BookLocations({ backendURL }) {
         <>
             <h1>Book Locations</h1>
 
-            <table>
+            <Table striped bordered hover>
                 <thead>
                     <tr>
                         {bookLocations.length > 0 && Object.keys(bookLocations[0]).map((header, index) => (
@@ -59,7 +59,7 @@ function BookLocations({ backendURL }) {
                     ))}
 
                 </tbody>
-            </table>
+            </Table>
             <CreateBookLocationForm books={books} locations={locations} backendURL={backendURL} refreshBookLocations={getData} />                
         </>
     );

@@ -34,7 +34,9 @@ const CreateLocationForm = ({ backendURL, refreshLocations }) => {
                 console.log("Location created successfully.");
                 refreshLocations();
             } else {
-                console.error("Error creating book.");
+                let errorData = await response.json();
+                console.error("Error:", errorData.message);
+                window.alert(errorData.message);
             }
         } catch (error) {
             console.error('Error during form submission:', error);
@@ -46,13 +48,14 @@ const CreateLocationForm = ({ backendURL, refreshLocations }) => {
         <h2>Create an location</h2>
 
         <form className='cuForm' onSubmit={handleSubmit}>
+            
             <label htmlFor="create_location_name">Location Name: </label>
             <input
                 type="text"
                 name="create_location_name"
                 id="create_location_name"
                 onChange={handleChange}
-            />
+            /><br></br>
 
             <label htmlFor="create_location_address">Address: </label>
             <input
@@ -60,7 +63,7 @@ const CreateLocationForm = ({ backendURL, refreshLocations }) => {
                 name="create_location_address"
                 id="create_location_address"
                 onChange={handleChange}
-            />
+            /><br></br>
 
             <label htmlFor="create_location_city">City: </label>
             <input
@@ -68,7 +71,7 @@ const CreateLocationForm = ({ backendURL, refreshLocations }) => {
                 name="create_location_city"
                 id="create_location_city"
                 onChange={handleChange}
-            />
+            /><br></br>
 
             <label htmlFor="create_location_state">State: </label>
             <input
@@ -76,7 +79,7 @@ const CreateLocationForm = ({ backendURL, refreshLocations }) => {
                 name="create_location_state"
                 id="create_location_state"
                 onChange={handleChange}
-            />
+            /><br></br>
 
             <label htmlFor="create_location_postal_code">Postal Code: </label>
             <input
@@ -84,7 +87,7 @@ const CreateLocationForm = ({ backendURL, refreshLocations }) => {
                 name="create_location_postal_code"
                 id="create_location_postal_code"
                 onChange={handleChange}
-            />  
+            /><br></br>
 
             <label htmlFor="create_location_phone">Phone Number: </label>
             <input
@@ -92,7 +95,7 @@ const CreateLocationForm = ({ backendURL, refreshLocations }) => {
                 name="create_location_phone_number"
                 id="create_location_phone_number"
                 onChange={handleChange}
-            />       
+            /><br></br>   
 
             <input type="submit" />
         </form>

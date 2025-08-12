@@ -1,8 +1,15 @@
 import { useState, useEffect } from 'react';  // Importing useState for managing state in the component
 
-const UpdateBookForm = ({ books, publishers, backendURL, refreshBooks }) => {
+const UpdateBookForm = ({ rowObject, publishers, backendURL, refreshBooks }) => {
+
+     const [showForm, setShowForm] = useState(false);
+
+    const toggleFormVisibility = () => {
+        setShowForm(!showForm);
+    };
+
     const [formData, setFormData] = useState({
-            update_book_id: '',
+            update_book_id: rowObject.book_id,
             update_book_publisher: '',
             update_book_language: '',
             update_book_isbn: '',
@@ -31,7 +38,9 @@ const UpdateBookForm = ({ books, publishers, backendURL, refreshBooks }) => {
                     console.log("Book updated successfully.");
                     refreshBooks();
                 } else {
-                    console.error("Error updating book.");
+                    let errorData = await response.json();
+                    console.error("Error:", errorData.message);
+                    window.alert(errorData.message);
                 }
             } catch (error) {
                 console.error('Error during form submission:', error);
@@ -40,23 +49,14 @@ const UpdateBookForm = ({ books, publishers, backendURL, refreshBooks }) => {
 
     return (
         <>
-        <h2>Update a Book</h2>
-        <form className='cuForm' onSubmit={handleSubmit}>
-            <label htmlFor="update_book_id">Book to Update: </label>
-            <select
-                name="update_book_id"
-                id="update_book_id"
-                onChange={handleChange}
-            >
-                <option value="">Select a Book</option>
-                {books.map((book) => (
-                    <option key={book.book_id} value={book.book_id}>
-                        {book.book_id} - {book.title} 
-                    </option>
-                ))}
-            </select>
-            
+        <td>
+        <button onClick={toggleFormVisibility}>
+            {showForm ? 'Hide Form' : 'Update'}
+        </button><br></br>
 
+        {showForm && (
+        <form className='cuForm' onSubmit={handleSubmit}>
+                      
             <label htmlFor="update_book_publisher">Publisher: </label>
             <select
                 name="update_book_publisher"
@@ -68,7 +68,7 @@ const UpdateBookForm = ({ books, publishers, backendURL, refreshBooks }) => {
                 {publishers.map((publisher, index) => (
                     <option value={publisher.publisher_id} key={index}>{publisher.publisher_name}</option>
                 ))}
-            </select>
+            </select><br></br>
            
             <label htmlFor="update_book_language">Language: </label>
             <input
@@ -77,7 +77,7 @@ const UpdateBookForm = ({ books, publishers, backendURL, refreshBooks }) => {
                 id="update_book_language"
                 placeholder="English"
                 onChange={handleChange}
-            />
+            /><br></br>
 
             <label htmlFor="update_book_isbn">ISBN: </label>
             <input
@@ -85,7 +85,7 @@ const UpdateBookForm = ({ books, publishers, backendURL, refreshBooks }) => {
                 name="update_book_isbn"
                 id="update_book_isbn"
                 onChange={handleChange}
-            />
+            /><br></br>
 
               
             <label htmlFor="update_book_pub_date">Publication date:</label>
@@ -94,10 +94,12 @@ const UpdateBookForm = ({ books, publishers, backendURL, refreshBooks }) => {
                 id="update_book_pub_date"
                 name="update_book_pub_date"
                 onChange={handleChange}
-            />
+            /><br></br>
 
             <input type="submit" />
         </form>
+        )}
+        </td>
         </>
     );
 };

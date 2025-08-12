@@ -560,7 +560,7 @@ BEGIN
 			publisher_id int(11),
 			publication_date date,
 			language varchar(245),
-			isbn varchar(245) NOT NULL,
+			isbn varchar(245) UNIQUE,
 			PRIMARY KEY (book_id),
 			FOREIGN KEY (publisher_id) REFERENCES publishers (publisher_id)
 	);

@@ -5,7 +5,10 @@ const DeleteAuthorForm = ({ rowObject, backendURL, refreshAuthors }) => {
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent default form submission
 
-        const formData = {
+        if (window.confirm("Are you sure you want to submit this form?")) {
+      // User clicked "OK", proceed with form submission logic
+      console.log("Form submitted!");
+      const formData = {
             delete_author_id: rowObject.author_id,
             delete_author_fname: rowObject.first_name,
             delete_author_lname: rowObject.last_name
@@ -23,11 +26,19 @@ const DeleteAuthorForm = ({ rowObject, backendURL, refreshAuthors }) => {
                 console.log("Author deleted successfully.");
                 refreshAuthors();
             } else {
-                console.error("Error deleting person.");
+                let errorData = await response.json();
+                console.error("Error:", errorData.message);
+                window.alert(errorData.message);
             }
         } catch (error) {
             console.error('Error during form submission:', error);
         }
+    } else {
+      // User clicked "Cancel", do nothing
+      console.log("Form submission cancelled.");
+    }
+
+        
     };
 
     return (
