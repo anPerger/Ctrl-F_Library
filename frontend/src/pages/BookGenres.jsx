@@ -44,6 +44,7 @@ function BookGenres({ backendURL }) {
         <>
             <h1>Book Genres</h1>
 
+            <Container style={{ maxWidth: "mw-100" }}>
             <Table striped bordered hover>
                 <thead>
                     <tr>
@@ -61,6 +62,7 @@ function BookGenres({ backendURL }) {
 
                 </tbody>
             </Table>
+            </Container>
             
             <CreateBookGenreForm books={books} genres={genres} backendURL={backendURL} refreshBookGenres={getData} />
 

@@ -40,6 +40,7 @@ function Genres({ backendURL }) {
         <>
             <h1>Genres</h1>
 
+            <Container style={{ maxWidth: "mw-100" }}>
             <Table striped bordered hover>
                 <thead>
                     <tr>
@@ -57,6 +58,7 @@ function Genres({ backendURL }) {
 
                 </tbody>
             </Table>
+            </Container>
             
             <CreateGenreForm backendURL={backendURL} refreshGenres={getData} />
                           

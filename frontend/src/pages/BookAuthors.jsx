@@ -44,6 +44,7 @@ function BookAuthors({ backendURL }) {
         <>
             <h1>Book Authors</h1>
 
+            <Container style={{ maxWidth: "mw-100" }}>
             <Table striped bordered hover>
                 <thead>
                     <tr>
@@ -61,6 +62,7 @@ function BookAuthors({ backendURL }) {
 
                 </tbody>
             </Table>
+            </Container>
             
             <CreateBookAuthorForm books={books} authors={authors} backendURL={backendURL} refreshBookAuthors={getData} />
 

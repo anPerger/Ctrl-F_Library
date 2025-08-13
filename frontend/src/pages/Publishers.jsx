@@ -43,6 +43,8 @@ function Publishers({ backendURL }) {
         <>
             <h1>Publishers</h1>
 
+
+            <Container style={{ maxWidth: "mw-100" }}>
             <Table striped bordered hover>
                 <thead>
                     <tr>
@@ -60,6 +62,7 @@ function Publishers({ backendURL }) {
 
                 </tbody>
             </Table>
+            </Container>
             
             <CreatePublisherForm backendURL={backendURL} refreshPublishers={getData} />
                          

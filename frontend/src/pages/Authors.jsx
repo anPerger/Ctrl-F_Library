@@ -42,7 +42,7 @@ function Authors({ backendURL }) {
     return (
         <>
             <h1>Authors</h1>
-
+            <Container style={{ maxWidth: "mw-100" }}>
             <Table striped bordered hover>
                 <thead>
                     <tr>
@@ -60,6 +60,7 @@ function Authors({ backendURL }) {
 
                 </tbody>
             </Table>
+            </Container>
             
             <CreateAuthorForm backendURL={backendURL} refreshAuthors={getData} />
                            

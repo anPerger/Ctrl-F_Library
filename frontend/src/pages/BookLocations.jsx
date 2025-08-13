@@ -43,6 +43,7 @@ function BookLocations({ backendURL }) {
         <>
             <h1>Book Locations</h1>
 
+            <Container style={{ maxWidth: "mw-100" }}>
             <Table striped bordered hover>
                 <thead>
                     <tr>
@@ -60,6 +61,8 @@ function BookLocations({ backendURL }) {
 
                 </tbody>
             </Table>
+            </Container>
+
             <CreateBookLocationForm books={books} locations={locations} backendURL={backendURL} refreshBookLocations={getData} />                
         </>
     );

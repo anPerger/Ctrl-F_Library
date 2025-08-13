@@ -563,6 +563,7 @@ BEGIN
 			isbn varchar(245) UNIQUE,
 			PRIMARY KEY (book_id),
 			FOREIGN KEY (publisher_id) REFERENCES publishers (publisher_id)
+			ON DELETE SET NULL
 	);
 
 	-- inserting spoof data 
